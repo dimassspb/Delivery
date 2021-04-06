@@ -32,6 +32,7 @@ width: 100px;
 `;
 
 const Login = styled.button`
+
 background-color: #4CAF50; /* Green */
     border: none;
     color: white;
@@ -40,6 +41,7 @@ background-color: #4CAF50; /* Green */
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    margin-right: 15px;
 }
 `;
 
