@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 const List = styled.ul`
-display: flex;
-justyfy-content: space-around;
-flex-wrap: wrap;
+  display: flex;
+  justyfy-content: space-around;
+  flex-wrap: wrap;
 `;
 
 const Item = styled.li`
@@ -39,14 +39,18 @@ const Item = styled.li`
   }
 `;
 
-export const ListItem = (props) => (
+export const ListItem = ({ itemList, setOpenItem }) => (
   <List>
-    {props.itemList.map((item) => (
-      <Item key={item.id} img={item.img}>
+    {itemList.map((item) => (
+      <Item key={item.id} img={item.img} onClick={() => setOpenItem(item)}>
         <p>{item.name}</p>
-        <p>{item.price.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</p>
+        <p>
+          {item.price.toLocaleString('ru-RU', {
+            style: 'currency',
+            currency: 'RUB',
+          })}
+        </p>
       </Item>
     ))}
   </List>
 );
-

@@ -1,13 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 import bannerImg from '../image/banner.png';
 
-const BannerEl = styled.div`
-
+export const Banner = styled.div`
+  width: 100%;
+  height: 200px;
+  background-position: center;
+  background-size: cover;
+  background-image: url(${bannerImg});
 `;
-
-export const Banner = () => (
-  <BannerEl>
-    <img src={bannerImg} alt="banner" />
-  </BannerEl>
-);
