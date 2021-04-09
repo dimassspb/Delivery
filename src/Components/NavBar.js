@@ -3,32 +3,32 @@ import styled from 'styled-components';
 import logoImg from '../image/logo1.svg';
 
 const NavBarStyled = styled.header`
-position: fixed;
-top: 0;
-left: 0;
-z-index: 999;
-height: 80px;
-width: 100vw;
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 15px;
-background-color: #299b01;
-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  height: 80px;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #299b01;
+  color: white;
 `;
 
 const Logo = styled.div`
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 `;
 
 const H1 = styled.h1`
-font-size: 24px;
-margin-left: 15px;
+  font-size: 24px;
+  margin-left: 15px;
 `;
 
 const ImgLogo = styled.img`
-width: 100px;
+  width: 100px;
 `;
 
 const Login = styled.button`
@@ -38,14 +38,18 @@ background-color: #4CAF50; /* Green */
     color: white;
     padding: 15px 32px;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
     font-size: 16px;
     margin-right: 15px;
+    transition-property: color, background-color, border-color;
+    transition-duration: 0.3s;
+      &:hover {
+        background-color: #fff;
+        color: #299b01;
+        border-color: #299b01;
+  }
 }
 `;
-
-
 
 export const NavBar = () => (
   <NavBarStyled>
