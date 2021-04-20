@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { ButtonCheckout } from '../Style/ButtonCheckout';
 import { OrderListItem } from '../Order/OrderListItem';
-import { formatCurrency } from '../Functions/secondaryFunction'
-import { totalPriceItems } from '../Functions/secondaryFunction'
+import { formatCurrency } from '../Functions/secondaryFunction';
+import { totalPriceItems } from '../Functions/secondaryFunction';
+import { projection } from '../Functions/secondaryFunction';
 
 const OrderStyled = styled.section`
   position: fixed;
@@ -47,23 +48,50 @@ const EmptyList = styled.p`
   text-align: center;
 `;
 
-export const Order = ({ orders,  setOrders, setOpenItem}) => {
+const rulesData = {
+  name: ['name'],
+  price: ['price'],
+  count: ['count'],
+  topping: [
+    'topping',
+    (arr) => arr.filter((obj) => obj.checked).map((obj) => obj.name),
+  ],
+  choice: ['choice', (item) => (item ? item : 'no choices')],
+};
 
-const deleteItem = index => {
-  const newOrders = [...orders];
-  newOrders.splice(index, 1);
-  setOrders(newOrders)
+export const Order = ({
+  orders,
+  setOrders,
+  setOpenItem,
+  authentication,
+  logIn,
+  firebaseDatabase,
+}) => {
+  const dataBase = firebaseDatabase();
+  const sendOrder = () => {
+    const newOrder = orders.map(projection(rulesData));
+    dataBase.ref('orders').push().set({
+      nameClient: authentication.displayName,
+      email: authentication.email,
+      order: newOrder
+    })
+  };
 
-}
+  const deleteItem = (index) => {
+    const newOrders = [...orders];
+    newOrders.splice(index, 1);
+    setOrders(newOrders);
+  };
 
-const total = orders.reduce((result, order)=>
-totalPriceItems(order) + result, 0)
+  const total = orders.reduce(
+    (result, order) => totalPriceItems(order) + result,
+    0,
+  );
 
-
-const totalCounter = orders.reduce(
-  (result, order) => order.count + result,
-  0,
-);
+  const totalCounter = orders.reduce(
+    (result, order) => order.count + result,
+    0,
+  );
   return (
     <OrderStyled>
       <OrderTitle>Ваш заказ</OrderTitle>
@@ -71,12 +99,12 @@ const totalCounter = orders.reduce(
         {orders.length ? (
           <OrderList>
             {orders.map((order, index) => (
-              <OrderListItem 
-              key={index}
-              order={order} 
-              deleteItem={deleteItem}
-              index={index}
-              setOpenItem={setOpenItem}
+              <OrderListItem
+                key={index}
+                order={order}
+                deleteItem={deleteItem}
+                index={index}
+                setOpenItem={setOpenItem}
               />
             ))}
           </OrderList>
@@ -89,7 +117,18 @@ const totalCounter = orders.reduce(
         <span>{totalCounter}</span>
         <TotalPrice>{formatCurrency(total)}</TotalPrice>
       </Total>
-      <ButtonCheckout>Оформить</ButtonCheckout>
+      <ButtonCheckout
+        onClick={() => {
+          if (authentication) {
+            console.log(orders);
+            sendOrder();
+          } else {
+            logIn();
+          }
+        }}
+      >
+        Оформить
+      </ButtonCheckout>
     </OrderStyled>
   );
 };

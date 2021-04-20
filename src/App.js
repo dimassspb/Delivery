@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database'
 import { GlobalStyle } from './Components/Style/GlobalStyle';
 import { NavBar } from './Components/NavBar/NavBar';
 import { Menu } from './Components/Menu/Menu';
@@ -13,6 +14,8 @@ import { useAuth } from './Components/Hooks/useAuth';
 const firebaseConfig = {
   apiKey: 'AIzaSyBWBXtXcRm8xtsooS41Hz3lZ_pXDoS5_TQ',
   authDomain: 'delivery-b4ae7.firebaseapp.com',
+  databaseURL:
+    'https://delivery-b4ae7-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'delivery-b4ae7',
   storageBucket: 'delivery-b4ae7.appspot.com',
   messagingSenderId: '345556631782',
@@ -28,8 +31,13 @@ function App() {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <NavBar {...auth}/>
-      <Order {...orders} {...openItem} />
+      <NavBar {...auth} />
+      <Order 
+      {...orders}
+      {...openItem}
+      {...auth}
+      firebaseDatabase={firebase.database} 
+      />
       <Menu {...openItem} />
       {openItem.openItem && <ModalItem {...openItem} {...orders} />}
     </React.Fragment>
