@@ -16,7 +16,7 @@ const orders = useOrders();
     <React.Fragment>
       <GlobalStyle />
       <NavBar />
-      <Order {...orders} />
+      <Order {...orders} {...openItem} />
       <Menu {...openItem} />
       {openItem.openItem && <ModalItem {...openItem} {...orders} />}
     </React.Fragment>
