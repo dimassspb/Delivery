@@ -50,12 +50,26 @@ background-color: #4CAF50; /* Green */
 }
 `;
 
-export const NavBar = () => (
+const User = styled.div`
+  display: flex;
+  align-item: center;
+  text-align: center;
+  font-size: 13px;
+`;
+
+export const NavBar = ({ authentication, logIn, logOut }) => (
   <NavBarStyled>
     <Logo>
       <ImgLogo src={logoImg} alt="logo" />
       <H1>Delivery</H1>
     </Logo>
-    <Login>Войти</Login>
+    {authentication ? (
+      <User>
+          <figure>{authentication.displayName}</figure>
+          <Login onClick={logOut}>Выйти</Login>
+      </User>
+    ) : (
+      <Login onClick={logIn}>Войти</Login>
+    )}
   </NavBarStyled>
 );
