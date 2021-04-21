@@ -68,6 +68,7 @@ export const Order = ({
   firebaseDatabase,
 }) => {
   const dataBase = firebaseDatabase();
+
   const sendOrder = () => {
     const newOrder = orders.map(projection(rulesData));
     dataBase.ref('orders').push().set({
@@ -75,6 +76,9 @@ export const Order = ({
       email: authentication.email,
       order: newOrder
     })
+
+    setOrders([]);
+
   };
 
   const deleteItem = (index) => {
