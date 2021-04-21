@@ -65,20 +65,17 @@ export const Order = ({
   setOpenItem,
   authentication,
   logIn,
-  firebaseDatabase,
+  database,
 }) => {
-  const dataBase = firebaseDatabase();
-
   const sendOrder = () => {
     const newOrder = orders.map(projection(rulesData));
-    dataBase.ref('orders').push().set({
+    database.ref('orders').push().set({
       nameClient: authentication.displayName,
       email: authentication.email,
-      order: newOrder
-    })
+      order: newOrder,
+    });
 
     setOrders([]);
-
   };
 
   const deleteItem = (index) => {
