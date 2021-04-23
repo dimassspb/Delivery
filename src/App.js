@@ -37,20 +37,22 @@ function App() {
   const database = firebase.database();
   const dbMenu = useDB(database);
   return (
-    <Context.Provider value={{ auth, openItem, dbMenu }}>
+    <Context.Provider
+      value={{
+        auth,
+        openItem,
+        dbMenu,
+        orders,
+        orderConfirm,
+        database: database,
+      }}
+    >
       <GlobalStyle />
       <NavBar />
-      <Order {...orders} {...openItem} {...auth} {...orderConfirm} />
-      <Menu  />
-      {openItem.openItem && <ModalItem {...openItem} {...orders} />}
-      {orderConfirm.openOrderConfirm && (
-        <OrderConfirm
-          {...orders}
-          {...auth}
-          {...orderConfirm}
-          database={database}
-        />
-      )}
+      <Order />
+      <Menu />
+      {openItem.openItem && <ModalItem />}
+      {orderConfirm.openOrderConfirm && <OrderConfirm />}
     </Context.Provider>
   );
 }

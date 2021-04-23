@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Overlay } from '../Modal/ModalItem';
 import { OrderTitle, Total, TotalPrice } from '../Order/Order';
@@ -6,6 +6,7 @@ import { ButtonCheckout } from '../Style/ButtonCheckout';
 import { projection } from '../Functions/secondaryFunction';
 import { formatCurrency } from '../Functions/secondaryFunction';
 import { totalPriceItems } from '../Functions/secondaryFunction';
+import { Context } from '../Functions/context';
 
 const Modal = styled.div`
   background-color: white;
@@ -36,16 +37,16 @@ const sendOrder = (database, orders, authentication) => {
     email: authentication.email,
     order: newOrder,
   });
-
 };
 
-export const OrderConfirm = ({
-  orders,
-  setOrders,
-  authentication,
-  setOpenOrderConfirm,
-  database,
-}) => {
+export const OrderConfirm = () => {
+
+  const {
+    orders: { orders, setOrders },
+    auth: { authentication },
+    orderConfirm: { setOpenOrderConfirm },
+    database,
+  } = useContext(Context);
 
   const total = orders.reduce(
     (result, order) => totalPriceItems(order) + result,
@@ -66,7 +67,9 @@ export const OrderConfirm = ({
             setOrders([]);
             setOpenOrderConfirm(false);
           }}
-        >Подтвердить</ButtonCheckout>
+        >
+          Подтвердить
+        </ButtonCheckout>
       </Modal>
     </Overlay>
   );
